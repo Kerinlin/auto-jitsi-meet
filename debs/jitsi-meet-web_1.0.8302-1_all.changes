@@ -1,0 +1,41 @@
+Format: 1.8
+Date: Wed, 25 Dec 2024 18:48:54 +0800
+Source: jitsi-meet-web
+Binary: jitsi-meet-prosody jitsi-meet-tokens jitsi-meet-turnserver jitsi-meet-web jitsi-meet-web-config
+Architecture: all
+Version: 1.0.8302-1
+Distribution: unstable
+Urgency: medium
+Maintainer: Jitsi Team <dev@jitsi.org>
+Changed-By: root <root@pgiot-Default-string>
+Description:
+ jitsi-meet-prosody - Prosody configuration for Jitsi Meet
+ jitsi-meet-tokens - Prosody token authentication plugin for Jitsi Meet
+ jitsi-meet-turnserver - Configures coturn to be used with Jitsi Meet
+ jitsi-meet-web - WebRTC JavaScript video conferences
+ jitsi-meet-web-config - Configuration for web serving of Jitsi Meet
+Changes:
+ jitsi-meet-web (1.0.8302-1) unstable; urgency=medium
+ .
+   * Custom
+Checksums-Sha1:
+ 8ded9b9d04059118e992b18d221356f6419e7f74 113476 jitsi-meet-prosody_1.0.8302-1_all.deb
+ 3fdef9d312be289fb36eef82bd6a170b0b635671 4116 jitsi-meet-tokens_1.0.8302-1_all.deb
+ 37af669c770a3363a172c7fdf5339cf27626d130 5392 jitsi-meet-turnserver_1.0.8302-1_all.deb
+ a48b41afe35ac6f1e366b060726e6744b1e2b990 31584 jitsi-meet-web-config_1.0.8302-1_all.deb
+ 2fc67511a418edccc476ab1c0bfee367122702e0 6437 jitsi-meet-web_1.0.8302-1_all.buildinfo
+ a8f997cfefe6bd501a1957dfcad1ac425f5eabfc 15043680 jitsi-meet-web_1.0.8302-1_all.deb
+Checksums-Sha256:
+ 40b7b450a62121e6e5e908a3a8deafe373a20254a5c009b9639a9f444e421fde 113476 jitsi-meet-prosody_1.0.8302-1_all.deb
+ 389ff44d32d824222355a70c945ebec00a45ed81b596dca9614d36477a8680ae 4116 jitsi-meet-tokens_1.0.8302-1_all.deb
+ ca2036c2f60a508bf23077981ecee65f89e0356ab033f5d66e8d84be7bef0caf 5392 jitsi-meet-turnserver_1.0.8302-1_all.deb
+ 898e609d7ebd7da40849f4c1c6ad868a4e56e2d87f37b0a32ef867b07e44cd2e 31584 jitsi-meet-web-config_1.0.8302-1_all.deb
+ 5084ed87ad582759a3b06e0bb3de388dca73af34c1e965613de188894ea22a82 6437 jitsi-meet-web_1.0.8302-1_all.buildinfo
+ 3197b76774fb0a992128cc31de3e32ffc869995d67c03c8cc17b2ccb9ac24676 15043680 jitsi-meet-web_1.0.8302-1_all.deb
+Files:
+ 6a40089fcfba70d86426c0d840f4093f 113476 net extra jitsi-meet-prosody_1.0.8302-1_all.deb
+ bd7876eb3bc758b7aae10c65908e1cf4 4116 net extra jitsi-meet-tokens_1.0.8302-1_all.deb
+ 4c6bee9aa32484d57e31db6118d0569e 5392 net extra jitsi-meet-turnserver_1.0.8302-1_all.deb
+ 16d7c0c600e8047e059d2822b23f776c 31584 net extra jitsi-meet-web-config_1.0.8302-1_all.deb
+ 2d6e394bc0b74a49f7600043d73565a0 6437 net extra jitsi-meet-web_1.0.8302-1_all.buildinfo
+ 828dce6a4657389773dc314e81de7cf5 15043680 net extra jitsi-meet-web_1.0.8302-1_all.deb

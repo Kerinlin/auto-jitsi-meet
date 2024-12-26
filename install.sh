@@ -78,7 +78,7 @@ get_system_ip() {
 
 # 检查并安装必要的工具
 check_and_install_tools() {
-  local tools=("curl" "apt-transport-https" "debconf-utils")
+  local tools=("curl" "debconf-utils" "gnupg2" "openjdk-11-jdk" "nginx")
   for tool in "${tools[@]}"; do
     if ! command -v $tool &>/dev/null; then
       echo "正在安装 $tool..."
@@ -123,6 +123,8 @@ check_firewall() {
     ufw allow 443/tcp
     ufw allow 10000/udp
     ufw allow 22/tcp
+    ufw allow 3478/udp
+    ufw allow 5349/tcp
     ufw --force enable
   fi
 }
@@ -203,40 +205,12 @@ configure_default_setting() {
   fi
 }
 
-# 检查 Ubuntu 版本并安装 prosody 相关依赖
-check_and_install_prosody() {
-  echo "检查 Ubuntu 版本..."
-  # 获取 Ubuntu 版本号（例如：20.04）
-  version=$(lsb_release -rs)
-
-  # 将版本号转换为可比较的数字（例如：20.04 -> 2004）
-  version_number=$(echo "$version" | sed 's/\.//')
-
-  if [ $version_number -lt 2004 ]; then
-    echo "Ubuntu 版本低于 20.04，使用旧版安装方式..."
-    echo deb http://packages.prosody.im/debian $(lsb_release -sc) main | sudo tee -a /etc/apt/sources.list
-    wget https://prosody.im/files/prosody-debian-packages.key -O- | sudo apt-key add -
-  else
-    echo "Ubuntu 版本 20.04 或更高，使用新版安装方式..."
-    sudo mkdir -p /etc/apt/keyrings
-    sudo curl -sL https://prosody.im/files/prosody-debian-packages.key -o /etc/apt/keyrings/prosody-debian-packages.key
-    echo "deb [signed-by=/etc/apt/keyrings/prosody-debian-packages.key] http://packages.prosody.im/debian $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/prosody-debian-packages.list
-  fi
-
-  # 更新包列表并安装 lua5.2
-  apt-get update -qq
-  apt-get install -y lua5.2
-}
-
 # 主安装流程
 main() {
   local IP_ADDRESS=""
 
   # 首先检查并卸载已存在的安装
   check_and_uninstall_jitsi
-
-  # 检查版本并安装 prosody 相关依赖
-  check_and_install_prosody
 
   # 如果提供了命令行参数,使用参数作为IP地址
   if [ $# -eq 1 ]; then
@@ -268,18 +242,10 @@ main() {
 
   # 更新包列表
   echo "正在更新软件包列表..."
-  apt-get update -qq
+  apt update
 
   # 检查并安装必要的工具
   check_and_install_tools
-
-  # 添加 Jitsi 仓库（如果尚未添加）
-  if [ ! -f /etc/apt/sources.list.d/jitsi-stable.list ]; then
-    echo "正在添加 Jitsi 仓库..."
-    curl https://download.jitsi.org/jitsi-key.gpg.key | sudo sh -c 'gpg --dearmor > /usr/share/keyrings/jitsi-keyring.gpg'
-    echo 'deb [signed-by=/usr/share/keyrings/jitsi-keyring.gpg] https://download.jitsi.org stable/' | sudo tee /etc/apt/sources.list.d/jitsi-stable.list >/dev/null
-    apt-get -y update
-  fi
 
   # 预配置 jitsi-videobridge 和 jitsi-meet-web-config
   echo "正在配置安装选项..."
@@ -301,11 +267,13 @@ main() {
   # 配置webview nginx
   configure_webview_nginx $IP_ADDRESS
 
-  # 配置服务开机自启
-  configure_autostart
-
   # 修改interface.js配置
   change_interface_js
+
+  sleep 2
+
+  # 配置服务开机自启
+  configure_autostart
 
   # 显示服务状态和开机自启状态
   echo "检查服务状态和开机自启配置："
